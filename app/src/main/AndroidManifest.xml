@@ -53,7 +53,7 @@
             android:exported="true"
             android:configChanges="orientation|screenSize|screenLayout"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.YuuCam.Fullscreen">
+            android:theme="@style/Theme.YuuCam">
             
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
