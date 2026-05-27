@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base App Theme -->
+    <style name="Theme.YuuCam" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="android:statusBarColor">@color/primaryColor</item>
+        <item name="android:navigationBarColor">@color/black</item>
+    </style>
+
+    <!-- Translucent Overlay Theme (No Action Bar) -->
+    <style name="Theme.YuuCam.NoActionBar" parent="Theme.YuuCam">
+    </style>
+</resources>

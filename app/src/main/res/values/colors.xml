@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primaryColor">#0D0D11</color>
+    <color name="accentColor">#00E5FF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="focusRingColor">#F2C94C</color>
+    <color name="shutterOuter">#E0E0E0</color>
+    <color name="shutterInner">#FF3B30</color>
+</resources>

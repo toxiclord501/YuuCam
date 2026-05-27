@@ -1,0 +1,854 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+
+    <!-- Primary CameraX Viewport -->
+    <androidx.camera.view.PreviewView
+        android:id="@+id/previewView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Interactive Grid lines (3x3 Rule of Thirds or Golden overlays) -->
+    <View
+        android:id="@+id/vGridLine1"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="#40FFFFFF"
+        android:visibility="visible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.333" />
+
+    <View
+        android:id="@+id/vGridLine2"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="#40FFFFFF"
+        android:visibility="visible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.666" />
+
+    <View
+        android:id="@+id/hGridLine1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#40FFFFFF"
+        android:visibility="visible"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.333" />
+
+    <View
+        android:id="@+id/hGridLine2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#40FFFFFF"
+        android:visibility="visible"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.666" />
+
+    <!-- Animated Autofocus Metering Guide -->
+    <View
+        android:id="@+id/viewFocusRing"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:visibility="invisible"
+        android:background="@drawable/ic_focus_ring" />
+
+    <!-- GCam Top Settings Shortcut Toolbar -->
+    <LinearLayout
+        android:id="@+id/gcamTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:gravity="center_vertical"
+        android:background="#B3050912"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/lblTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="YuuCam (HDR+)"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:textSize="14sp" />
+
+        <!-- PRO DECK Dropdown Toggler Button -->
+        <TextView
+            android:id="@+id/btnProDeck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#99E11D48"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:textSize="10sp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_marginEnd="10dp"
+            android:text="PRO DECK ▾"
+            android:gravity="center" />
+
+        <!-- HDR Status Toggle -->
+        <ImageButton
+            android:id="@+id/btnHdrState"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_hdr_enhanced"
+            android:contentDescription="HDR+ Status" />
+
+        <!-- Flash Toggle -->
+        <ImageButton
+            android:id="@+id/btnFlashState"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_flash_auto"
+            android:contentDescription="Flash Toggle" />
+
+        <!-- Timer Toggle -->
+        <ImageButton
+            android:id="@+id/btnTimerState"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_timer_off"
+            android:contentDescription="Timer Toggle" />
+
+    </LinearLayout>
+
+    <!-- Glassy Pro Deck Content Drawer overlay -->
+    <LinearLayout
+        android:id="@+id/layoutProDeck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#E60A0D17"
+        android:padding="12dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/gcamTopBar">
+
+        <!-- Tabs Navigation -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:orientation="horizontal"
+            android:background="#44000000"
+            android:padding="2dp">
+
+            <TextView
+                android:id="@+id/btnTabSensor"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="SENSOR"
+                android:textColor="#E11D48"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/btnTabHdr"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="HDR+"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/btnTabManual"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="MANUAL"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/btnTabDisplay"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="DISPLAY"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="10sp" />
+
+        </LinearLayout>
+
+        <!-- SENSOR TAB CONTENT -->
+        <LinearLayout
+            android:id="@+id/layoutTabContentSensor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Active Camera Sensor"
+                android:textColor="#99A2B4"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp">
+
+                <TextView
+                    android:id="@+id/btnSensorIMX787"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="#B3E11D48"
+                    android:text="IMX787 Core"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:textSize="10sp"
+                    android:layout_marginEnd="4dp" />
+
+                <TextView
+                    android:id="@+id/btnSensorIsocell"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="#222630"
+                    android:text="ISOCELL Tele"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:textSize="10sp"
+                    android:layout_marginEnd="4dp" />
+
+                <TextView
+                    android:id="@+id/btnSensorIMX363"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="#222630"
+                    android:text="IMX363 Wide"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Noise Reduction Core"
+                android:textColor="#99A2B4"
+                android:textSize="10sp"
+                android:layout_marginTop="8dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp">
+
+                <TextView
+                    android:id="@+id/btnNoiseOff"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="#222630"
+                    android:text="OFF"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:textSize="10sp"
+                    android:layout_marginEnd="4dp" />
+
+                <TextView
+                    android:id="@+id/btnNoiseSpatial"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="#222630"
+                    android:text="SPATIAL"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:textSize="10sp"
+                    android:layout_marginEnd="4dp" />
+
+                <TextView
+                    android:id="@+id/btnNoiseSabre"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="#B3E11D48"
+                    android:text="SABRE V2"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- HDR TAB CONTENT -->
+        <LinearLayout
+            android:id="@+id/layoutTabContentHdr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Stacking Frames Number"
+                android:textColor="#99A2B4"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp">
+
+                <TextView
+                    android:id="@+id/btnFrames5"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="#222630"
+                    android:text="5 Frm (Fast)"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:textSize="10sp"
+                    android:layout_marginEnd="4dp" />
+
+                <TextView
+                    android:id="@+id/btnFrames11"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="#B3E11D48"
+                    android:text="11 Frm (Std)"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:textSize="10sp"
+                    android:layout_marginEnd="4dp" />
+
+                <TextView
+                    android:id="@+id/btnFrames25"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="#222630"
+                    android:text="25 Frm (Super)"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RAW Digital Negative (DNG)"
+                android:textColor="#99A2B4"
+                android:textSize="10sp"
+                android:layout_marginTop="8dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/btnRawToggle"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginTop="4dp"
+                android:background="#B3E11D48"
+                android:text="DNG RAW 12-Bit (ACTIVE)"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+
+        <!-- MANUAL TAB CONTENT -->
+        <LinearLayout
+            android:id="@+id/layoutTabContentManual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ISO Sensitivitas"
+                android:textColor="#99A2B4"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp">
+
+                <TextView
+                    android:id="@+id/btnIsoAuto"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="#B3E11D48"
+                    android:text="AUTO"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:textSize="10sp"
+                    android:layout_marginEnd="4dp" />
+
+                <TextView
+                    android:id="@+id/btnIso100"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="#222630"
+                    android:text="100"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:textSize="10sp"
+                    android:layout_marginEnd="4dp" />
+
+                <TextView
+                    android:id="@+id/btnIso400"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="#222630"
+                    android:text="400"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:textSize="10sp"
+                    android:layout_marginEnd="4dp" />
+
+                <TextView
+                    android:id="@+id/btnIso1600"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="#222630"
+                    android:text="1600"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kecepatan Rana (Shutter Speed)"
+                android:textColor="#99A2B4"
+                android:textSize="10sp"
+                android:layout_marginTop="8dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp">
+
+                <TextView
+                    android:id="@+id/btnShutterAuto"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="#B3E11D48"
+                    android:text="AUTO"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:textSize="10sp"
+                    android:layout_marginEnd="4dp" />
+
+                <TextView
+                    android:id="@+id/btnShutter1000"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="#222630"
+                    android:text="1/1000s"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:textSize="10sp"
+                    android:layout_marginEnd="4dp" />
+
+                <TextView
+                    android:id="@+id/btnShutter250"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="#222630"
+                    android:text="1/250s"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:textSize="10sp"
+                    android:layout_marginEnd="4dp" />
+
+                <TextView
+                    android:id="@+id/btnShutter1s"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="#222630"
+                    android:text="1s"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- DISPLAY TAB CONTENT -->
+        <LinearLayout
+            android:id="@+id/layoutTabContentDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Grid Overlay Template"
+                android:textColor="#99A2B4"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp">
+
+                <TextView
+                    android:id="@+id/btnGrid3x3"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="#B3E11D48"
+                    android:text="3x3 Rules"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:textSize="10sp"
+                    android:layout_marginEnd="4dp" />
+
+                <TextView
+                    android:id="@+id/btnGridGolden"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="#222630"
+                    android:text="Golden"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:textSize="10sp"
+                    android:layout_marginEnd="4dp" />
+
+                <TextView
+                    android:id="@+id/btnGridCrosshair"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="#222630"
+                    android:text="Crosshair"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:textSize="10sp"
+                    android:layout_marginEnd="4dp" />
+
+                <TextView
+                    android:id="@+id/btnGridNone"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="#222630"
+                    android:text="NONE"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shutter Capture Sfx"
+                android:textColor="#99A2B4"
+                android:textSize="10sp"
+                android:layout_marginTop="8dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/btnSoundToggle"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginTop="4dp"
+                android:background="#B3E11D48"
+                android:text="Shutter Sound (ENABLED)"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Side Floating Dual Slider Panels -->
+    <LinearLayout
+        android:id="@+id/panelSliders"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/modeSelectorBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutProDeck"
+        android:background="#44000000"
+        android:padding="4dp">
+
+        <!-- Kelvin/Temperature WB Slider panel -->
+        <LinearLayout
+            android:id="@+id/pnlKelvinSlider"
+            android:layout_width="wrap_content"
+            android:layout_height="180dp"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_marginEnd="14dp"
+            android:padding="4dp">
+
+            <TextView
+                android:id="@+id/txtKelvinVal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5000K"
+                android:textColor="#FFF2C94C"
+                android:textSize="9sp"
+                android:textStyle="bold" />
+
+            <SeekBar
+                android:id="@+id/seekKelvin"
+                android:layout_width="120dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:max="100"
+                android:progress="50"
+                android:rotation="270" />
+
+        </LinearLayout>
+
+        <!-- Exposure Slider Panel -->
+        <LinearLayout
+            android:id="@+id/pnlExposureSlider"
+            android:layout_width="wrap_content"
+            android:layout_height="180dp"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="4dp">
+
+            <TextView
+                android:id="@+id/txtExposureVal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0 EV"
+                android:textColor="@android:color/white"
+                android:textSize="9sp"
+                android:textStyle="bold" />
+
+            <SeekBar
+                android:id="@+id/seekExposure"
+                android:layout_width="120dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:rotation="270" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Shooting Mode Selector Carousel Bar -->
+    <LinearLayout
+        android:id="@+id/modeSelectorBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:background="#66000000"
+        app:layout_constraintBottom_toTopOf="@+id/bottomActionPanel">
+
+        <TextView
+            android:id="@+id/btnModePhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PHOTO"
+            android:textColor="#E11D48"
+            android:textStyle="bold"
+            android:textSize="11sp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp" />
+
+        <TextView
+            android:id="@+id/btnModePortrait"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PORTRAIT"
+            android:textColor="@android:color/white"
+            android:textSize="11sp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp" />
+
+        <TextView
+            android:id="@+id/btnModeNight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NIGHT"
+            android:textColor="@android:color/white"
+            android:textSize="11sp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp" />
+
+        <TextView
+            android:id="@+id/btnModeVideo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VIDEO"
+            android:textColor="@android:color/white"
+            android:textSize="11sp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp" />
+
+        <TextView
+            android:id="@+id/btnModePanorama"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PANORAMA"
+            android:textColor="@android:color/white"
+            android:textSize="11sp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp" />
+
+    </LinearLayout>
+
+    <!-- HDR Processing Spinner Card -->
+    <RelativeLayout
+        android:id="@+id/overlayProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:padding="20dp"
+        android:background="#CC0A0D17"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            android:id="@+id/progressSpinner"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/lblProcessingText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/progressSpinner"
+            android:layout_marginTop="10dp"
+            android:text="Memproses GCam HDR+..."
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+    <!-- Lower Operational Bar (Camera actions) -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomActionPanel"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="#B3050912"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Reverse Facing -->
+        <ImageButton
+            android:id="@+id/btnSwitchCamera"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:background="@drawable/oval_button_bg"
+            android:src="@drawable/ic_camera_flip"
+            android:tint="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintEnd_toStartOf="@+id/btnCapture"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="Flip Lens" />
+
+        <!-- Shutter Capture Trigger -->
+        <ImageButton
+            android:id="@+id/btnCapture"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/shutter_ring_bg"
+            android:src="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="Take Snapshot" />
+
+        <!-- Gallery / Thumbnail Drawer link -->
+        <ImageView
+            android:id="@+id/btnGalleryThumbnail"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:background="@drawable/oval_button_bg"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.8"
+            app:layout_constraintStart_toEndOf="@+id/btnCapture"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="Recent Media" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

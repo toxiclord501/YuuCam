@@ -1,0 +1,28 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Background transparent -->
+    <item><shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent" />
+        </shape></item>
+
+    <!-- Vertical line 1 (left 1/3) -->
+    <item><shape android:shape="line">
+            <stroke android:width="1dp" android:color="#80FFFFFF" />
+        </shape></item>
+
+    <!-- Vertical line 2 (right 1/3) -->
+    <item><shape android:shape="line">
+            <stroke android:width="1dp" android:color="#80FFFFFF" />
+        </shape></item>
+
+    <!-- Horizontal line 1 (top 1/3) -->
+    <item><shape android:shape="line">
+            <stroke android:width="1dp" android:color="#80FFFFFF" />
+        </shape></item>
+
+    <!-- Horizontal line 2 (bottom 1/3) -->
+    <item><shape android:shape="line">
+            <stroke android:width="1dp" android:color="#80FFFFFF" />
+        </shape></item>
+
+</layer-list>
